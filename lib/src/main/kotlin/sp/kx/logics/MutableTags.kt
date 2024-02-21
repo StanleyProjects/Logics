@@ -3,7 +3,10 @@ package sp.kx.logics
 internal class MutableTags(tags: Map<String, Any>) {
     private val tags = tags.toMutableMap()
 
-    fun <T : Any> getOrPut(key: String, supplier: () -> T): T {
+    fun <T : Any> getOrPut(
+        key: String,
+        supplier: () -> T,
+    ): T {
         return synchronized(tags) {
             val previous = tags[key]
             if (previous == null) {
@@ -16,7 +19,7 @@ internal class MutableTags(tags: Map<String, Any>) {
         }
     }
 
-    operator fun iterator(): Iterator<Map.Entry<String, Any>>{
+    operator fun iterator(): Iterator<Map.Entry<String, Any>> {
         return tags.iterator()
     }
 

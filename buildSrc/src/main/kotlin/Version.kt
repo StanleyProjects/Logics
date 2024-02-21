@@ -1,4 +1,5 @@
 object Version {
-    const val jvmTarget = "17"
-    const val kotlin = "1.9.20"
+    const val JVM_TARGET = "17"
+    const val KOTLIN = "1.9.20"
+    const val KTLINT = "1.1.1"
 }
