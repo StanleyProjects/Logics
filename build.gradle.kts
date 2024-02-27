@@ -1,3 +1,6 @@
+import sp.gx.core.asFile
+import sp.gx.core.buildDir
+import sp.gx.core.buildSrc
 import sp.gx.core.check
 
 buildscript {
@@ -9,21 +12,18 @@ buildscript {
 }
 
 task<Delete>("clean") {
-    delete = setOf(layout.buildDirectory.get(), "buildSrc/build")
+    delete = setOf(buildDir(), buildSrc.buildDir())
 }
 
 task("checkLicense") {
     doLast {
         val author = "Stanley Wintergreen" // todo
-        val report =
-            layout.buildDirectory.get()
-                .dir("reports/analysis/license")
-                .file("index.html")
-                .asFile
         file("LICENSE").check(
             expected = emptySet(),
             regexes = setOf("^Copyright 2\\d{3} $author${'$'}".toRegex()),
-            report = report,
+            report = buildDir()
+                .dir("reports/analysis/license")
+                .asFile("index.html"),
         )
     }
 }
