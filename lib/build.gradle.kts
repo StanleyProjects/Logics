@@ -19,17 +19,17 @@ plugins {
 val compileKotlinTask =
     tasks.getByName<KotlinCompile>("compileKotlin") {
         kotlinOptions {
-            jvmTarget = Version.JVM_TARGET
+            jvmTarget = Version.jvmTarget
             freeCompilerArgs = freeCompilerArgs + setOf("-module-name", colonCase(maven.group, maven.id))
         }
     }
 
 tasks.getByName<JavaCompile>("compileTestJava") {
-    targetCompatibility = Version.JVM_TARGET
+    targetCompatibility = Version.jvmTarget
 }
 
 tasks.getByName<KotlinCompile>("compileTestKotlin") {
-    kotlinOptions.jvmTarget = Version.JVM_TARGET
+    kotlinOptions.jvmTarget = Version.jvmTarget
 }
 
 dependencies {

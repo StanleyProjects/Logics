@@ -4,7 +4,7 @@ buildscript {
     repositories.mavenCentral()
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.KOTLIN}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
     }
 }
 
@@ -33,7 +33,7 @@ repositories.mavenCentral()
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint("com.pinterest.ktlint:ktlint-cli:${Version.KTLINT}") {
+    ktlint("com.pinterest:ktlint:${Version.ktlint}") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
         }
