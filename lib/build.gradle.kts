@@ -19,7 +19,7 @@ import sp.gx.core.getByName
 import sp.gx.core.resolve
 import sp.gx.core.task
 
-version = "0.1.2"
+version = "0.1.3"
 
 val maven = Maven.Artifact(
     group = "com.github.kepocnhh",
@@ -363,6 +363,22 @@ task<Detekt>("checkDocumentation") {
                 .file()
                 .filled()
             println("Documentation: ${index.absolutePath}")
+        }
+    }
+    tasks.create("assemble", variant, "Metadata") {
+        doLast {
+            val file = buildDir()
+                .dir("yml")
+                .file("metadata.yml")
+                .assemble(
+                    """
+                        repository:
+                         owner: '${gh.owner}'
+                         name: '${gh.name}'
+                        version: '$version'
+                    """.trimIndent(),
+                )
+            println("Metadata: ${file.absolutePath}")
         }
     }
 }
