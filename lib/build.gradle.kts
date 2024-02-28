@@ -1,6 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import sp.gx.core.Badge
+import sp.gx.core.GitHub
 import sp.gx.core.Markdown
 import sp.gx.core.Maven
 import sp.gx.core.asFile
@@ -14,6 +16,7 @@ import sp.gx.core.existing
 import sp.gx.core.file
 import sp.gx.core.filled
 import sp.gx.core.getByName
+import sp.gx.core.resolve
 import sp.gx.core.task
 
 version = "0.1.2"
@@ -21,6 +24,11 @@ version = "0.1.2"
 val maven = Maven.Artifact(
     group = "com.github.kepocnhh",
     id = rootProject.name,
+)
+
+val gh = GitHub.Repository(
+    owner = "StanleyProjects",
+    name = rootProject.name,
 )
 
 repositories.mavenCentral()
@@ -333,6 +341,28 @@ task<Detekt>("checkDocumentation") {
                     ),
                 )
             println("POM: ${file.absolutePath}")
+        }
+    }
+    task<DokkaTask>("assemble", variant, "Documentation") {
+        outputDirectory = layout.buildDirectory.dir("documentation/$variant")
+        moduleName = gh.name
+        moduleVersion = version
+        dokkaSourceSets.getByName("main") {
+            val path = "src/$name/kotlin"
+            reportUndocumented = false
+            sourceLink {
+                localDirectory = file(path)
+                remoteUrl = gh.url().resolve("tree/${moduleVersion.get()}/lib", path)
+            }
+            jdkVersion = Version.jvmTarget.toInt()
+        }
+        doLast {
+            val index = outputDirectory.get()
+                .file("index.html")
+                .existing()
+                .file()
+                .filled()
+            println("Documentation: ${index.absolutePath}")
         }
     }
 }
