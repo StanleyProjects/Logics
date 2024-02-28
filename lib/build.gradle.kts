@@ -7,6 +7,9 @@ import sp.gx.core.assemble
 import sp.gx.core.buildDir
 import sp.gx.core.check
 import sp.gx.core.create
+import sp.gx.core.existing
+import sp.gx.core.file
+import sp.gx.core.filled
 import sp.gx.core.task
 
 version = "0.1.0"
@@ -37,8 +40,33 @@ tasks.getByName<KotlinCompile>("compileTestKotlin") {
     kotlinOptions.jvmTarget = Version.jvmTarget
 }
 
+tasks.getByName<JavaCompile>("compileTestJava") {
+    targetCompatibility = Version.jvmTarget
+}
+
+tasks.getByName<KotlinCompile>("compileTestKotlin") {
+    kotlinOptions.jvmTarget = Version.jvmTarget
+}
+
+fun Test.getExecutionData(): File {
+    return buildDir()
+        .dir("jacoco")
+        .asFile("$name.exec")
+}
+
+val taskUnitTest = task<Test>("checkUnitTest") {
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED") // https://github.com/gradle/gradle/issues/18647
+    doLast {
+        getExecutionData().existing().file().filled()
+    }
+}
+
 dependencies {
-// todo
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.jupiter}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}")
 }
 
 "unstable".also { variant ->
