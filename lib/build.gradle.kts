@@ -109,3 +109,30 @@ dependencies {
         }
     }
 }
+
+"snapshot".also { variant ->
+    val version = "${version}-SNAPSHOT"
+    tasks.create("check", variant, "Readme") {
+        doLast {
+            val badge = Markdown.image(
+                text = "version",
+                url = Badge.url(
+                    label = "version",
+                    message = version,
+                    color = "2962ff",
+                ),
+            )
+            val expected = setOf(
+                badge,
+                Markdown.link("Maven", Maven.Snapshot.url(maven, version)),
+                "implementation(\"${maven.moduleName(version)}\")",
+            )
+            rootDir.resolve("README.md").check(
+                expected = expected,
+                report = buildDir()
+                    .dir("reports/analysis/readme")
+                    .asFile("index.html"),
+            )
+        }
+    }
+}
