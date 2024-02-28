@@ -23,6 +23,7 @@ repositories.mavenCentral()
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    id("org.gradle.jacoco")
 }
 
 val compileKotlinTask = tasks.getByName<KotlinCompile>("compileKotlin") {
@@ -38,6 +39,11 @@ tasks.getByName<JavaCompile>("compileTestJava") {
 
 tasks.getByName<KotlinCompile>("compileTestKotlin") {
     kotlinOptions.jvmTarget = Version.jvmTarget
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.jupiter}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}")
 }
 
 tasks.getByName<JavaCompile>("compileTestJava") {
@@ -64,9 +70,40 @@ val taskUnitTest = task<Test>("checkUnitTest") {
     }
 }
 
-dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.jupiter}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.jupiter}")
+jacoco.toolVersion = Version.jacoco
+
+val taskCoverageReport = task<JacocoReport>("assembleCoverageReport") {
+    dependsOn(taskUnitTest)
+    reports {
+        csv.required = false
+        html.required = true
+        xml.required = false
+    }
+    sourceDirectories.setFrom(file("src/main/kotlin"))
+    classDirectories.setFrom(sourceSets.main.get().output.classesDirs)
+    executionData(taskUnitTest.getExecutionData())
+    doLast {
+        val report = buildDir()
+            .dir("reports/jacoco/$name/html")
+            .file("index.html")
+            .existing()
+            .file()
+            .filled()
+        println("Coverage report: ${report.absolutePath}")
+    }
+}
+
+task<JacocoCoverageVerification>("checkCoverage") {
+    dependsOn(taskCoverageReport)
+    violationRules {
+        rule {
+            limit {
+                minimum = BigDecimal(0.96)
+            }
+        }
+    }
+    classDirectories.setFrom(taskCoverageReport.classDirectories)
+    executionData(taskCoverageReport.executionData)
 }
 
 "unstable".also { variant ->
