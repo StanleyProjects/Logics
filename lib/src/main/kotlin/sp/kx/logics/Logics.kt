@@ -3,19 +3,16 @@ package sp.kx.logics
 import java.io.Closeable
 
 abstract class Logics {
-    private val tags: MutableTags
+    private val tags: MutableSet<Closeable>
 
-    constructor(tags: Map<String, Any>) {
-        this.tags = MutableTags(tags)
+    constructor(tags: Set<Closeable>) {
+        this.tags = tags.toMutableSet()
     }
 
-    constructor() : this(tags = emptyMap())
+    constructor() : this(tags = emptySet())
 
     internal fun clear() {
-        for ((_, tag) in tags) {
-            if (tag !is Closeable) continue
-            tag.close()
-        }
+        for (it in tags) it.close()
         tags.clear()
     }
 }
