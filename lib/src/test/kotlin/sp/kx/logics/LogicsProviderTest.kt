@@ -30,6 +30,7 @@ internal class LogicsProviderTest {
         val provider = LogicsProvider()
         val label = "foo"
         assertFalse(provider.contains<MockLogics>(label))
+        @Suppress("IgnoredReturnValue")
         provider.get<MockLogics>(label)
         assertTrue(provider.contains<MockLogics>(label))
     }
