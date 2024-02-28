@@ -1,5 +1,6 @@
 package sp.kx.logics
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.Closeable
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -125,6 +127,36 @@ internal class LogicsTest {
             logics.clear()
             logics.after()
         }
+    }
+
+    @Test
+    fun clearCoroutineContextTest2() {
+        class MockCloseable : Closeable, CoroutineScope {
+            override val coroutineContext: CoroutineContext = UnconfinedTestDispatcher()
+            private val closed = AtomicBoolean(false)
+
+            fun isClosed(): Boolean {
+                return closed.get()
+            }
+
+            override fun close() {
+                closed.set(true)
+            }
+        }
+        val mockCoroutineScope = MockCloseable()
+        class LogicsForTest : Logics() {
+            private val actualScope = getCoroutineScope("foo") {
+                mockCoroutineScope
+            }
+            fun isClosed(): Boolean {
+                check(actualScope === mockCoroutineScope)
+                return mockCoroutineScope.isClosed()
+            }
+        }
+        val logics = LogicsForTest()
+        assertFalse(logics.isClosed())
+        logics.clear()
+        assertTrue(logics.isClosed())
     }
 
     @Test
