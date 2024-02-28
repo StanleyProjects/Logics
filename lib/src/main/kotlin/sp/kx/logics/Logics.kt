@@ -1,7 +1,7 @@
 package sp.kx.logics
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
@@ -47,12 +47,12 @@ abstract class Logics {
         get() {
             return getCoroutineScope(
                 key = "${this::class.java.name}:COROUTINE_SCOPE",
-                supplier = { CloseableCoroutineScope(LogicsJob(coroutineContext)) },
+                supplier = { CloseableCoroutineScope(SupervisorJob() + coroutineContext) },
             )
         }
 
-    protected fun launch(block: suspend CoroutineScope.() -> Unit): Job {
-        return coroutineScope.launch(block = block)
+    protected fun launch(block: suspend CoroutineScope.() -> Unit) {
+        coroutineScope.launch(block = block)
     }
 
     internal fun clear() {

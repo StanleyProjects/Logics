@@ -108,14 +108,17 @@ internal class LogicsTest {
                 fun after() {
                     val checked = AtomicBoolean(false)
                     assertFalse(checked.get())
-                    assertThrows(Throwable::class.java) {
-                        runBlocking {
-                            launch {
-                                checked.set(true)
-                            }.join()
+                    assertThrows(IllegalStateException::class.java) {
+                        launch {
+                            checked.set(true)
                         }
                     }
-                    assertFalse(checked.get())
+                    val start = System.currentTimeMillis().milliseconds
+                    while (true) {
+                        assertFalse(checked.get())
+                        val now = System.currentTimeMillis().milliseconds
+                        if (now - start > 1.seconds) break
+                    }
                 }
             }
             val logics = LogicsForTest()
@@ -127,25 +130,10 @@ internal class LogicsTest {
 
     @Test
     fun clearErrorTest() {
-        val foo = object : Closeable {
-            private val closed = AtomicBoolean(false)
-
-            fun isClosed(): Boolean {
-                return closed.get()
-            }
-
-            override fun close() {
-                closed.set(true)
-            }
-        }
-        class LogicsForTest : Logics(tags = mapOf("foo" to foo)) {
-            fun assert(expected: Boolean) {
-                assertEquals(expected, foo.isClosed())
-            }
-        }
+        class LogicsForTest : Logics()
         val logics = LogicsForTest()
         logics.clear()
-        assertThrows(Throwable::class.java) {
+        assertThrows(IllegalStateException::class.java) {
             logics.clear()
         }
     }
