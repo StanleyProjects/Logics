@@ -24,5 +24,21 @@ package sp.kx.logics
  * @since 0.1.0
  */
 interface LogicsFactory {
+    /**
+     * Creates a new instance of the given [type].
+     *
+     * Usage:
+     * ```
+     * val factory = object : LogicsFactory {
+     *     override fun <T : Logics> create(type: Class<T>): T {
+     *         return type
+     *             .getConstructor()
+     *             .newInstance()
+     *     }
+     * }
+     * ```
+     * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+     * @since 0.1.0
+     */
     fun <T : Logics> create(type: Class<T>): T
 }
