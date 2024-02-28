@@ -178,7 +178,7 @@ task<JacocoCoverageVerification>("checkCoverage") {
 }
 
 "snapshot".also { variant ->
-    val version = "${version}-SNAPSHOT"
+    val version = "$version-SNAPSHOT"
     tasks.create("check", variant, "Readme") {
         doLast {
             val badge = Markdown.image(
