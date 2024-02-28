@@ -7,10 +7,17 @@ import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class Logics {
+open class Logics {
     private val coroutineContext: CoroutineContext
     private val tags: MutableMap<String, Closeable>
     private var isCleared = false
+    protected val coroutineScope: CoroutineScope
+        get() {
+            return getCoroutineScope(
+                key = "${this::class.java.name}:COROUTINE_SCOPE",
+                supplier = { CloseableCoroutineScope(SupervisorJob() + coroutineContext) },
+            )
+        }
 
     constructor(
         coroutineContext: CoroutineContext,
@@ -42,14 +49,6 @@ abstract class Logics {
         if (isCleared) error("Already cleared!")
         return tags.getOrPut(key = key, supplier) as CoroutineScope
     }
-
-    protected val coroutineScope: CoroutineScope
-        get() {
-            return getCoroutineScope(
-                key = "${this::class.java.name}:COROUTINE_SCOPE",
-                supplier = { CloseableCoroutineScope(SupervisorJob() + coroutineContext) },
-            )
-        }
 
     protected fun launch(block: suspend CoroutineScope.() -> Unit) {
         coroutineScope.launch(block = block)
