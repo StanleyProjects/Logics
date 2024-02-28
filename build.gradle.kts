@@ -44,11 +44,9 @@ task<JavaExec>("checkCodeStyle") {
     classpath = ktlint
     mainClass = "com.pinterest.ktlint.Main"
     val reporter = "html"
-    val output =
-        layout.buildDirectory.get()
-            .dir("reports/analysis/code/style/html")
-            .file("index.html")
-            .asFile
+    val output = buildDir()
+        .dir("reports/analysis/code/style/html")
+        .asFile("index.html")
     args(
         "build.gradle.kts",
         "settings.gradle.kts",
