@@ -42,11 +42,15 @@ open class Logics {
         tags = emptyMap(),
     )
 
+    internal fun isActive(): Boolean {
+        return !isCleared
+    }
+
     protected fun <T> getCoroutineScope(
         key: String,
         supplier: () -> T,
     ): CoroutineScope where T : Closeable, T : CoroutineScope {
-        if (isCleared) error("Already cleared!")
+        if (!isActive()) error("Already cleared!")
         return tags.getOrPut(key = key, supplier) as CoroutineScope
     }
 
@@ -56,7 +60,7 @@ open class Logics {
 
     internal fun clear() {
         synchronized(this) {
-            if (isCleared) error("Already cleared!")
+            if (!isActive()) error("Already cleared!")
             for ((_, it) in tags) {
                 it.close()
             }

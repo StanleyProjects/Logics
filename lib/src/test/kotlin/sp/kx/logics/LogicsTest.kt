@@ -131,26 +131,18 @@ internal class LogicsTest {
 
     @Test
     fun clearCoroutineContextTest2() {
-        class MockCloseable : Closeable, CoroutineScope {
+        class MockCoroutineScope private constructor(val delegate: MockCloseable) : Closeable by delegate, CoroutineScope {
+            constructor() : this(MockCloseable())
             override val coroutineContext: CoroutineContext = UnconfinedTestDispatcher()
-            private val closed = AtomicBoolean(false)
-
-            fun isClosed(): Boolean {
-                return closed.get()
-            }
-
-            override fun close() {
-                closed.set(true)
-            }
         }
-        val mockCoroutineScope = MockCloseable()
+        val mockCoroutineScope = MockCoroutineScope()
         class LogicsForTest : Logics() {
             private val actualScope = getCoroutineScope("foo") {
                 mockCoroutineScope
             }
             fun isClosed(): Boolean {
                 check(actualScope === mockCoroutineScope)
-                return mockCoroutineScope.isClosed()
+                return mockCoroutineScope.delegate.isClosed()
             }
         }
         val logics = LogicsForTest()

@@ -11,15 +11,23 @@ class LogicsProvider(
         return logics.getOrPut(CompositeKey(label = label, type = type)) { factory.create(type) } as T
     }
 
-    fun contains() {
-        TODO("LogicsProvider:contains")
+    fun <T : Logics> contains(label: String, type: Class<T>): Boolean {
+        return logics.containsKey(CompositeKey(label = label, type = type))
     }
 
-    fun remove() {
-        TODO("LogicsProvider:remove")
+    fun <T : Logics> remove(label: String, type: Class<T>) {
+        logics.remove(CompositeKey(label = label, type = type))?.clear()
     }
 }
 
 inline fun <reified T : Logics> LogicsProvider.get(label: String): T {
     return get(label = label, type = T::class.java)
+}
+
+inline fun <reified T : Logics> LogicsProvider.contains(label: String): Boolean {
+    return contains(label = label, type = T::class.java)
+}
+
+inline fun <reified T : Logics> LogicsProvider.remove(label: String) {
+    remove(label = label, type = T::class.java)
 }
