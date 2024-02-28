@@ -7,6 +7,24 @@ import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
+/**
+ * It is a class that is responsible for preparing and managing the data for UI.
+ * It also handles the communication of the UI with the rest of the application (e.g. calling the business logic classes).
+ * It is always created in association with a scope and will be retained as long as the scope is alive.
+ *
+ * Usage:
+ * ```
+ * val provider = LogicsProvider()
+ * val logics = provider<FooLogics>.get("foo")
+ * coroutineScope.launch {
+ *     logics.state.collect {
+ *         onState(it)
+ *     }
+ * }
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 open class Logics {
     private val coroutineContext: CoroutineContext
     private val tags: MutableMap<String, Closeable>

@@ -1,5 +1,19 @@
 package sp.kx.logics
 
+/**
+ * A utility class that provides [Logics].
+ *
+ * Usage:
+ * ```
+ * val provider = LogicsProvider()
+ * val logics = provider<FooLogics>.get("foo")
+ * assertTrue(logics === provider<FooLogics>.get("foo"))
+ * provider<FooLogics>.remove("foo")
+ * assertFalse(logics === provider<FooLogics>.get("foo"))
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 class LogicsProvider(
     private val factory: LogicsFactory = SimpleLogicsFactory,
 ) {
