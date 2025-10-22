@@ -1,0 +1,22 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:sp.kx.logics////PointingToDeclaration/-logics/sp.kx.logics/index.html
+$dokka.location:sp.kx.logics//contains/sp.kx.logics.LogicsProvider#kotlin.String/PointingToDeclaration/-logics/sp.kx.logics/contains.html
+$dokka.location:sp.kx.logics//get/sp.kx.logics.LogicsProvider#kotlin.String/PointingToDeclaration/-logics/sp.kx.logics/get.html
+$dokka.location:sp.kx.logics//remove/sp.kx.logics.LogicsProvider#kotlin.String/PointingToDeclaration/-logics/sp.kx.logics/remove.html
+$dokka.location:sp.kx.logics/Logics///PointingToDeclaration/-logics/sp.kx.logics/-logics/index.html
+$dokka.location:sp.kx.logics/Logics/Logics/#/PointingToDeclaration/-logics/sp.kx.logics/-logics/-logics.html
+$dokka.location:sp.kx.logics/Logics/Logics/#kotlin.collections.Map[kotlin.String,java.io.Closeable]/PointingToDeclaration/-logics/sp.kx.logics/-logics/-logics.html
+$dokka.location:sp.kx.logics/Logics/Logics/#kotlin.coroutines.CoroutineContext#kotlin.collections.Map[kotlin.String,java.io.Closeable]/PointingToDeclaration/-logics/sp.kx.logics/-logics/-logics.html
+$dokka.location:sp.kx.logics/Logics/Logics/#kotlin.coroutines.CoroutineContext/PointingToDeclaration/-logics/sp.kx.logics/-logics/-logics.html
+$dokka.location:sp.kx.logics/LogicsFactory///PointingToDeclaration/-logics/sp.kx.logics/-logics-factory/index.html
+$dokka.location:sp.kx.logics/LogicsFactory/create/#java.lang.Class[TypeParam(bounds=[sp.kx.logics.Logics])]/PointingToDeclaration/-logics/sp.kx.logics/-logics-factory/create.html
+$dokka.location:sp.kx.logics/LogicsProvider///PointingToDeclaration/-logics/sp.kx.logics/-logics-provider/index.html
+$dokka.location:sp.kx.logics/LogicsProvider/LogicsProvider/#sp.kx.logics.LogicsFactory/PointingToDeclaration/-logics/sp.kx.logics/-logics-provider/-logics-provider.html
+$dokka.location:sp.kx.logics/LogicsProvider/contains/#kotlin.String#java.lang.Class[TypeParam(bounds=[sp.kx.logics.Logics])]/PointingToDeclaration/-logics/sp.kx.logics/-logics-provider/contains.html
+$dokka.location:sp.kx.logics/LogicsProvider/get/#kotlin.String#java.lang.Class[TypeParam(bounds=[sp.kx.logics.Logics])]/PointingToDeclaration/-logics/sp.kx.logics/-logics-provider/get.html
+$dokka.location:sp.kx.logics/LogicsProvider/remove/#kotlin.String#java.lang.Class[TypeParam(bounds=[sp.kx.logics.Logics])]/PointingToDeclaration/-logics/sp.kx.logics/-logics-provider/remove.html
+$dokka.location:sp.kx.logics/SimpleLogicsFactory///PointingToDeclaration/-logics/sp.kx.logics/-simple-logics-factory/index.html
+$dokka.location:sp.kx.logics/SimpleLogicsFactory/create/#java.lang.Class[TypeParam(bounds=[sp.kx.logics.Logics])]/PointingToDeclaration/-logics/sp.kx.logics/-simple-logics-factory/create.html
+sp.kx.logics
+
