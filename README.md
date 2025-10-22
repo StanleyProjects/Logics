@@ -3,12 +3,32 @@ It is a business logic or UI level state holder.
 
 ---
 
+## Release
+
+`0.2.0`
+| [GitHub](https://github.com/StanleyProjects/Logics/releases/tag/0.2.0)
+| [Maven](https://central.sonatype.com/artifact/com.github.kepocnhh/Logics/0.2.0)
+| [Docs](https://StanleyProjects.github.io/Logics/docs/0.2.0)
+
+### Build
+```
+$ gradle lib:assembleReleaseJar
+```
+
+### Import
+```kotlin
+dependencies {
+    implementation("com.github.kepocnhh:Logics:0.2.0")
+}
+```
+
+---
+
 ## Snapshot
 
-![version](https://img.shields.io/static/v1?label=version&message=0.1.3-SNAPSHOT&labelColor=212121&color=2962ff&style=flat)
-
-- [Maven](https://s01.oss.sonatype.org/content/repositories/snapshots/com/github/kepocnhh/Logics/0.1.3-SNAPSHOT)
-- [Documentation](https://StanleyProjects.github.io/Logics/doc/0.1.3-SNAPSHOT)
+> GitHub [0.2.0-SNAPSHOT](https://github.com/StanleyProjects/Logics/releases/tag/0.2.0-SNAPSHOT) release
+>
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Logics/maven-metadata.xml)
 
 ### Build
 ```
@@ -18,11 +38,11 @@ $ gradle lib:assembleSnapshotJar
 ### Import
 ```kotlin
 repositories {
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+    maven("https://central.sonatype.com/repository/maven-snapshots")
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Logics:0.1.3-SNAPSHOT")
+    implementation("com.github.kepocnhh:Logics:0.2.0-SNAPSHOT")
 }
 ```
 
@@ -30,9 +50,9 @@ dependencies {
 
 ## Unstable
 
-![version](https://img.shields.io/static/v1?label=version&message=0.0.1u-SNAPSHOT&labelColor=212121&color=2962ff&style=flat)
-
-- [Maven](https://s01.oss.sonatype.org/content/repositories/snapshots/com/github/kepocnhh/Logics/0.0.1u-SNAPSHOT)
+> GitHub [0.2.0u-SNAPSHOT](https://github.com/StanleyProjects/Logics/releases/tag/0.2.0u-SNAPSHOT) release
+>
+> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Logics/maven-metadata.xml)
 
 ### Build
 ```
@@ -42,11 +62,11 @@ $ gradle lib:assembleUnstableJar
 ### Import
 ```kotlin
 repositories {
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots")
+    maven("https://central.sonatype.com/repository/maven-snapshots")
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Logics:0.0.1u-SNAPSHOT")
+    implementation("com.github.kepocnhh:Logics:0.2.0u-SNAPSHOT")
 }
 ```
 

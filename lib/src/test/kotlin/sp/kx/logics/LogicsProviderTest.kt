@@ -38,12 +38,15 @@ internal class LogicsProviderTest {
     @Test
     fun removeTest() {
         val closable = MockCloseable()
-        class TestLogics : Logics(mapOf("foo" to closable))
-        val provider = LogicsProvider(MockLogicsFactory(TestLogics()))
         val label = "foo"
+        class TestLogics : Logics(mapOf(label to closable))
+        val provider = LogicsProvider(MockLogicsFactory(TestLogics()))
         assertFalse(provider.contains<TestLogics>(label))
         val logics = provider.get<TestLogics>(label)
         assertTrue(provider.contains<TestLogics>(label))
+        assertFalse(closable.isClosed())
+        assertTrue(logics.isActive())
+        provider.remove<TestLogics>("bar")
         assertFalse(closable.isClosed())
         assertTrue(logics.isActive())
         provider.remove<TestLogics>(label)
