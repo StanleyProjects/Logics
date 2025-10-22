@@ -9,7 +9,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * It is a class that is responsible for preparing and managing the data for UI.
- * It also handles the communication of the UI with the rest of the application (e.g. calling the business logic classes).
+ * It also handles the communication of the UI with the rest of the application
+ * (e.g. calling the business logic classes).
  * It is always created in association with a scope and will be retained as long as the scope is alive.
  *
  * Usage:
